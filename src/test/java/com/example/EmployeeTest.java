@@ -70,4 +70,28 @@ class EmployeeTest {
       String actuall = employee.toString();
       assertThat(actuall).isEqualTo(correctFormatExpected);
     }
+    @Test
+    @DisplayName("Check if null value is allowed by the constructor")
+    void checkIfNullValueIsAllowedByTheConstructor(){
+        assertThatCode(() -> employee.setId(null))
+                .doesNotThrowAnyException();
+    }
+
+    @Test
+    @DisplayName("SetId method accepts null value ")
+    void setIdMethodAcceptsNullValue(){
+        assertThatCode(() -> employee.setId(null))
+                .doesNotThrowAnyException();
+        assertThat(employee.getId()).isNull();
+    }
+
+    @Test
+    void toString_HandlesNullIdGracefully() {
+        employee.setId(null);
+        String result = employee.toString();
+        String expectedResult = "Employee [id=null, salary=" + employee.getSalary() + "]";
+        assertThat(result).isEqualTo(expectedResult);
+    }
+
 }
+
