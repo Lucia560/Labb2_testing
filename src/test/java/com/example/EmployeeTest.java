@@ -82,7 +82,8 @@ class EmployeeTest {
 
     // kanke önodig test . Jag har coverage utan den
     @Test
-    void toString_HandlesNullIdGracefully() {
+    @DisplayName("Check if toString method can handle null values")
+    void checkIfToStringMethodCanHandleNullValues() {
         employee.setId(null);
         String result = employee.toString();
         String expectedResult = "Employee [id=null, salary=" + employee.getSalary() + "]";
