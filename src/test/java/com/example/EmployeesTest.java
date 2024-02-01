@@ -16,15 +16,16 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(MockitoExtension.class)
 class EmployeesTest {
 
- @Mock
- private BankService bankService;
- @Mock
- private EmployeeRepository employeeRepository;
- @InjectMocks
- private Employees employees;
- private Employee employee1;
- private Employee employee2;
- private Employee employee3;
+    private FakeBankService fakeBankService; // obj of class that implements interface BankService to test upon
+    @Mock
+    private BankService bankService;
+    @Mock
+    private EmployeeRepository employeeRepository;
+    @InjectMocks
+    private Employees employees;
+    private Employee employee1;
+    private Employee employee2;
+    private Employee employee3;
 
  @BeforeEach
  void setUp(){
@@ -35,35 +36,37 @@ class EmployeesTest {
  }
 
 
- @Test
- @DisplayName("Test if the payment is done")
- void testIfThePaymentIsDone(){
-     int payments = employees.payEmployees();
 
-     assertEquals(3,payments);
-     Mockito.verify(bankService).pay(employee1.getId(), employee1.getSalary());
-     Mockito.verify(bankService).pay(employee2.getId(), employee2.getSalary());
-     Mockito.verify(bankService).pay(employee3.getId(),employee3.getSalary());
+ @Test
+ @DisplayName("Test payment with spy on FakeBankService")
+ void testPaymentWithSpy() {
+     fakeBankService = new FakeBankService();
+     BankService spyBankService = Mockito.spy(fakeBankService);// use spy
+     employees = new Employees(employeeRepository, spyBankService); // new obj with spy attached
+
+     employees.payEmployees();
+
+     Mockito.verify(spyBankService).pay(employee1.getId(), employee1.getSalary());
+     Mockito.verify(spyBankService).pay(employee2.getId(), employee2.getSalary());
+     Mockito.verify(spyBankService).pay(employee3.getId(), employee3.getSalary());
      assertTrue(employee1.isPaid());
      assertTrue(employee2.isPaid());
      assertTrue(employee3.isPaid());
- }
+    }
 
- @Test
- @DisplayName("Catch RunTimeexception")
- void catchRunTimeException(){
-     Mockito.doThrow(RuntimeException.class).when(bankService).pay(employee1.getId(), employee1.getSalary());
+
+
+    @Test
+  @DisplayName("catch Runtime exception")
+  void  catchRuntimeException(){
+     Mockito.doThrow(RuntimeException.class).when(bankService).pay(employee1.getId(),employee1.getSalary());
      int payments = employees.payEmployees();
-     assertEquals(2,payments);
 
+     assertEquals(2,payments);
      Mockito.verify(bankService).pay(employee1.getId(), employee1.getSalary());
      Mockito.verify(bankService).pay(employee2.getId(), employee2.getSalary());
      assertFalse(employee1.isPaid());
      assertTrue(employee2.isPaid());
  }
-
-
-
-
 
 }
