@@ -26,7 +26,7 @@ class EmployeeTest {
     }
 
     @Test
-    @DisplayName("Check if the salary is correct.")
+    @DisplayName("Check if the salary is correct")
     void checkIfTheSalaryIsCorrect(){
         assertThat(employee.getSalary()).isEqualTo(35000.0);
     }

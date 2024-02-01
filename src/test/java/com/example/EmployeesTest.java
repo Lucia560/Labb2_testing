@@ -9,6 +9,14 @@ import org.mockito.Mockito;
 import static org.junit.jupiter.api.Assertions.*;
 class EmployeesTest {
 
+ @Mock
+ BankService bankService;
+ @Mock
+ EmployeeRepository employeeRepository;
+ @InjectMocks
+   Employees employees;
+   Employee employee;
+
 
 
 
