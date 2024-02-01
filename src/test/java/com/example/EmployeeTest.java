@@ -21,13 +21,13 @@ class EmployeeTest {
     }
     @Test
     @DisplayName("Get employee by id when id exists")
-    void get_Employee_by_id_when_id_exits(){
+    void getEmployeebyIdWhenIdExits(){
         assertThat(employee.getId()).isEqualTo("Dana Scully");
     }
 
     @Test
-    @DisplayName("Check if the salary is correctly .")
-    void checkIfTheSalaryIsCorrectly(){
+    @DisplayName("Check if the salary is correct.")
+    void checkIfTheSalaryIsCorrect(){
         assertThat(employee.getSalary()).isEqualTo(35000.0);
     }
 
@@ -70,12 +70,7 @@ class EmployeeTest {
       String actuall = employee.toString();
       assertThat(actuall).isEqualTo(correctFormatExpected);
     }
-    @Test
-    @DisplayName("Check if null value is allowed by the constructor")
-    void checkIfNullValueIsAllowedByTheConstructor(){
-        assertThatCode(() -> employee.setId(null))
-                .doesNotThrowAnyException();
-    }
+
 
     @Test
     @DisplayName("SetId method accepts null value ")
@@ -85,6 +80,7 @@ class EmployeeTest {
         assertThat(employee.getId()).isNull();
     }
 
+    // kanke önodig test . Jag har coverage utan den
     @Test
     void toString_HandlesNullIdGracefully() {
         employee.setId(null);
