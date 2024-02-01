@@ -35,8 +35,6 @@ class EmployeesTest {
   Mockito.when(employeeRepository.findAll()).thenReturn(List.of(employee1, employee2,employee3));
  }
 
-
-
  @Test
  @DisplayName("Test payment with spy on FakeBankService")
  void testPaymentWithSpy() {
