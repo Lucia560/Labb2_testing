@@ -53,8 +53,7 @@ class EmployeesTest {
     }
 
 
-
-    @Test
+  @Test
   @DisplayName("catch Runtime exception")
   void  catchRuntimeException(){
      Mockito.doThrow(RuntimeException.class).when(bankService).pay(employee1.getId(),employee1.getSalary());
